@@ -6,12 +6,13 @@ const arrayItem = [
   { name: "Product E", profit: 88 },
   { name: "Product F", profit: 29 },
 ];
-
+// top product function
 function topProduct(items) {
+  // map the profit to locat the profit in the object
   const value = items.map((object) => {
     return object.profit;
   });
-
+  // get the maximum value
   const max = Math.max(...value);
 
   // Find the object with the max ID
@@ -20,10 +21,11 @@ function topProduct(items) {
 }
 
 function bottomProduct(items) {
+  // map the profit to locat the profit in the object
   const value = items.map((object) => {
     return object.profit;
   });
-
+  // get the minimum value
   const max = Math.min(...value);
 
   // Find the object with the max ID
@@ -34,11 +36,6 @@ console.log("top product");
 topProduct(arrayItem);
 console.log("bottom product");
 bottomProduct(arrayItem);
-
-// console.log(`top product
-// { name: 'Product C', profit: 93 }
-// bottom product
-// { name: 'Product A', profit: -75 }`);
 
 const dynastyReign = [
   {
@@ -71,46 +68,44 @@ const dynastyReign = [
   },
 ];
 
-// function longest word
-function longestDynasty(item) {
-  const value = item.map((object) => {
-    return object.name.length;
-  });
-  const max = Math.max(...value);
-
-  const obj = item.find((element) => element.name.length === max);
-  console.log(obj);
-}
-console.log("longestDynasty");
-longestDynasty(dynastyReign);
 // convert year function
-
 function convertionProcess(item) {
   const word = item.map((object) => {
+    //split the year to place it in array format
     return object.year.split("");
   });
-  //   console.log(word);
+  // array of total converted for each object object value
+  let arrayTotal = [];
+
   word.forEach((element) => {
-    console.log(element);
-    // let num = 0;
+    // array of converter roman integer
     let arraycon = [];
 
     for (let i = 0; i < element.length; i++) {
+      //each element will converted to year number
       num = convertYear(element[i]);
       arraycon.push(num);
-
+      // if each of the element is converted then add it all and push to arrayTotal
       if (element.length === arraycon.length) {
-        console.log(
-          arraycon.reduce((a, b) => {
-            return a + b;
-          })
-        );
+        let item = arraycon.reduce((a, b) => {
+          return a + b;
+        });
+        arrayTotal.push(item);
       }
     }
   });
+  // get the maximum value and find the index of it
+  let answer = Math.max(...arrayTotal);
+  let findIndex = arrayTotal.indexOf(Number(answer));
+  //minus a 1000 year
+  answer - 1000;
+
+  console.log("longest dynasty");
+  //display the longest dynasty on the console
+  console.log(dynastyReign[findIndex]);
 }
-console.log("convertionProcess");
 convertionProcess(dynastyReign);
+// function for convertion of roman integers
 function convertYear(item) {
   switch (item) {
     case "I":
