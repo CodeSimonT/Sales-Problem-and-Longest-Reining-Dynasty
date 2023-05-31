@@ -64,7 +64,7 @@ const dynastyReign = [
   },
   {
     name: "Andre Dynasty",
-    year: "MMXICX",
+    year: "MMMXICX",
   },
 ];
 
@@ -105,6 +105,7 @@ function convertionProcess(item) {
   console.log(dynastyReign[findIndex]);
 }
 convertionProcess(dynastyReign);
+
 // function for convertion of roman integers
 function convertYear(item) {
   switch (item) {
