@@ -19,23 +19,42 @@ function topProduct(items) {
   const obj = items.find((element) => element.profit === max);
   console.log(obj);
 }
-
+// bottom products function
 function bottomProduct(items) {
   // map the profit to locat the profit in the object
   const value = items.map((object) => {
     return object.profit;
   });
   // get the minimum value
-  const max = Math.min(...value);
+  const min = Math.min(...value);
 
   // Find the object with the max ID
-  const obj = items.find((element) => element.profit === max);
+  const obj = items.find((element) => element.profit === min);
   console.log(obj);
 }
+//
+function findClosestToZeroPositive(items) {
+  let closest = Infinity;
+  const value = items.map((object) => {
+    return object.profit;
+  });
+
+  for (let i = 0; i < value.length; i++) {
+    const currentNumber = value[i];
+
+    if (currentNumber >= 0 && currentNumber < closest) {
+      closest = currentNumber;
+    }
+  }
+  return closest;
+}
+
 console.log("top product");
 topProduct(arrayItem);
 console.log("bottom product");
 bottomProduct(arrayItem);
+console.log("zero product");
+console.log(findClosestToZeroPositive(arrayItem));
 
 const dynastyReign = [
   {
@@ -70,30 +89,43 @@ const dynastyReign = [
 
 // convert year function
 function convertionProcess(item) {
+  const regex = /^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/;
   const word = item.map((object) => {
     //split the year to place it in array format
-    return object.year.split("");
+    if (regex.test(object.year)) {
+      return object.year.split("");
+    } else {
+      return (object.year = "invalid");
+    }
+    console.log(object.year);
   });
   // array of total converted for each object object value
   let arrayTotal = [];
+  // console.log(word);
 
-  word.forEach((element) => {
-    // array of converter roman integer
-    let arraycon = [];
+  if (Array.isArray(word)) {
+    word.forEach((element) => {
+      // array of converter roman integer
+      let arraycon = [];
 
-    for (let i = 0; i < element.length; i++) {
-      //each element will converted to year number
-      num = convertYear(element[i]);
-      arraycon.push(num);
-      // if each of the element is converted then add it all and push to arrayTotal
-      if (element.length === arraycon.length) {
-        let item = arraycon.reduce((a, b) => {
-          return a + b;
-        });
-        arrayTotal.push(item);
+      for (let i = 0; i < element.length; i++) {
+        // console.log(element[i]);
+        //each element will converted to year number
+        num = convertYear(element[i]);
+        arraycon.push(num);
+        // if each of the element is converted then add it all and push to arrayTotal
+        if (element.length === arraycon.length) {
+          let item = arraycon.reduce((a, b) => {
+            return a + b;
+          });
+          arrayTotal.push(item);
+        }
       }
-    }
-  });
+    });
+  } else {
+    return;
+  }
+
   // get the maximum value and find the index of it
   let answer = Math.max(...arrayTotal);
   let findIndex = arrayTotal.indexOf(Number(answer));
